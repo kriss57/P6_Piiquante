@@ -4,16 +4,7 @@
 const Sauce = require('../models/sauces')
 const fs = require('fs')
 
-//-----------------------------------------------//
-//-----Methode Get pour toute les sauces---------lecture sauce----------//
-/*exports.getAllSauce = (req, res, next) => {
-  Sauce.find()
-    .then(sauces => res.status(200).json(sauces))
-    .catch(error => res.status(400).json({ error }))
-
-}*/
-
-//-----------------TEST 2--------OK----------------------//
+//----------------------------------------------------------------------//
 //-----Methode Get pour toute les sauces---------lecture sauce----------//
 exports.getAllSauce = (req, res, next) => {
   Sauce.find()
@@ -21,17 +12,7 @@ exports.getAllSauce = (req, res, next) => {
     .catch(err => res.status(500).json({ message: 'Database Error', error: err }))
 }
 
-
-
-//-----------------------------------------------//
-//-----Methode Get pour une sauce---------lecture sauce----------//
-/*exports.getOneSauce = (req, res, next) => {
-  Sauce.findOne({ _id: req.params.id })
-    .then(sauce => res.status(200).json(sauce))
-    .catch(error => res.status(404).json({ error }))
-}*/
-
-//----------------TEST 2------OK-------------------------//
+//----------------------------------------------------------------//
 //-----Methode Get pour une sauce---------lecture sauce----------//
 exports.getOneSauce = async (req, res) => {
   let sauceId = (req.params.id)
@@ -42,21 +23,20 @@ exports.getOneSauce = async (req, res) => {
   }
 
   try {
-    // Récupération du cocktail
+    // Récupération de la sauce
     let sauce = await Sauce.findOne({ _id: sauceId })
 
     // Test si résultat
     if (sauce === null) {
-      return res.status(404).json({ message: 'This cocktail does not exist !' })
+      return res.status(404).json({ message: 'This sauce does not exist !' })
     }
 
-    // Renvoi du Cocktail trouvé
+    // Renvoi de la sauce trouvé
     return res.json(sauce)
   } catch (err) {
     return res.status(500).json({ message: 'Database Error', error: err })
   }
 }
-
 
 //----------------------------------------------//
 //-----Methode Post pour créer la sauce--------//
@@ -72,35 +52,8 @@ exports.createSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 }
 
-/*//--------------TEST2--------------------------------//
-//-----Methode Post pour créer la sauce--------//
-exports.createSauce = async (req, res) => {
-  const sauceObject = JSON.parse(req.body.sauce)
-  delete req.body._id
-  // Validation des données reçues
-  if (!sauceObject) {
-    return res.status(400).json({ message: 'Missing Data' })
-  }
-
-  try {
-    // Vérification si la saucel existe
-    const sauce = new Sauce({
-      ...sauceObject,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` // Genérer l Url de l,image=> protocol => le nom d'hote => directory => nom du fichier
-    })
-
-    // Céation de la sauce
-
-    sauce = await Sauce.save()
-    return res.json({ message: 'Sauce Created' })
-  } catch (err) {
-    return res.status(500).json({ message: 'Database Error', error: err })
-  }
-}*/
-
-
-//-----------------------------------------------//  //reste a effacer ancienne img si change img
-//-----Methode update sauce-----------//
+//-----------------------------------------------// 
+//---------------Methode update sauce-----------//
 exports.updateSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }).then((sauce) => {
     const filename = sauce.imageUrl.split("/images/")[1];
@@ -121,7 +74,6 @@ exports.updateSauce = (req, res, next) => {
     })
   })
 }
-
 
 //----------------------------------------------//
 //-----Methode delete pour supprimer la sauce--------//
@@ -157,6 +109,29 @@ exports.thumbSauce = (req, res, next) => {
       .then(() => res.status(201).json({ message: 'Sauce like +1 !' }))
       .catch((error) => res.status(400).json({ error }))
   }
+  if (req.body.like === -1) {
+    console.log(req.body)
+    console.log('requet front dislike a 1 ')
+    //Mise a jour Bdd---------// //chaque user peu ajouter 1 dislike++
+    Sauce.updateOne({ _id: req.params.id }, { $inc: { dislikes: req.body.like++ }, $push: { usersDisliked: req.body.userId } })
+      .then(() => res.status(201).json({ message: 'Sauce dislike +1 !' }))
+      .catch((error) => res.status(400).json({ error }))
+  }
+  Sauce.findOne({ _id: req.params.id })
+    .then(sauce => {
+      if (sauce.usersLiked.includes(req.body.userId)) {
+        //Mise a jour Bdd---------//
+        Sauce.updateOne({ _id: req.params.id }, { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 } })
+          .then(() => { res.status(201).json({ message: 'like => -1 !' }) })
+          .catch(error => res.status(400).json({ error }))
+      } else if (sauce.usersDisliked.includes(req.body.userId)) {
+        //Mise a jour Bdd---------//
+        Sauce.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 } })
+          .then(() => { res.status(201).json({ message: 'dislike => -1 !' }) })
+          .catch(error => res.status(400).json({ error }))
+      }
+    })
+    .catch(error => res.status(400).json({ error }))
 
 
   /*  Sauce.findOne({ _id: req.param.id })               //recherche id

@@ -32,15 +32,6 @@ app.use('/api/sauces', sauce_router)
 //-----middleware pour requete au dossier 'images'---//
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
-/*//middleware pour accéder a l'API depuis tout origine '*'
-//Ajoute les headers (Origin, X-Request-With,ect..)
-//Envoyé des requetes (get, post ,put ......)           -------A VOIR CI N2C2SSAIRE  TEST A FAIRE
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
-});*/
 
 app.all('*', (req, res) => res.status(501).send(`Mais qu'est ce que tu fait la ?`)) //Ressource non implémenté
 
