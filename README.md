@@ -56,4 +56,4 @@ npm start
 ## Connexion a la page web 
 Aprés avoir démarré le front et le back
 ```
-Copier directement l'url dans le navigateur : (http://localhost:8081/)
+Rendez vous : [ici](http://localhost:8081/)
