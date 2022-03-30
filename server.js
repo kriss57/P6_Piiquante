@@ -2,10 +2,9 @@
 //--------Import des modules nécessaires-------//
 const express = require('express')
 const cors = require('cors')
-//const bodyParser = require('body-parser')          //A VOIR
 const mongoose = require('mongoose')
 const path = require('path')
-const helmet = require('helmet')          //Conflit avec CORS  notSameOrigin
+//const helmet = require('helmet')          //Conflit avec CORS  notSameOrigin
 
 //-------------------------------------------//
 //---------Initialisation de l'API----------//

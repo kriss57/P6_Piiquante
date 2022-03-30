@@ -5,6 +5,11 @@
 const jwt = require('jsonwebtoken')
 
 //----Methode extraction du token--------//
+/**
+ * 
+ * @param {string} authorization 
+ * @returns matches et token
+ */
 const extractBearer = authorization => {
 
     if (typeof authorization !== 'string') {
@@ -13,12 +18,19 @@ const extractBearer = authorization => {
 
     // Isolation du token
     const matches = authorization.match(/(bearer)\s+(\S+)/i)
-    console.log(matches);
+    console.log('m=' + matches);
+    console.log('m=' + matches[2]);
     return matches && matches[2]
 }
 
 //------------------------------------------------------//
 //------------Vérification du token--------------------//
+/**
+ * Middleware d'autorisation au route
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization && extractBearer(req.headers.authorization)

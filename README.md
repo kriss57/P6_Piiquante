@@ -5,7 +5,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/kriss57/P6_Piiquante.git)
 
-Partie frontend réalisé avec le framework Angular , le backend avec node et 
+Partie frontend réalisée avec le framework Angular , le backend avec node et 
 la base de donnée : Mongodb.
 
 ## Tech
@@ -24,20 +24,20 @@ Clonez ce repository: [https://github.com/kriss57/P6_Piiquante.git]
 
 ## Installation backend
 
-Piiquante nécéssite [Node.js](https://nodejs.org/) v10+ pour fonctionner.
+Piiquante nécessite [Node.js](https://nodejs.org/) v10+ pour fonctionner.
 
-Démarrer le serveur depuis le dossier backend .
+Démarrer l'API' :
 
 ```sh
-cd backend
+npm i
 npm start
 ...le serveur demarre sur : http://localhost:3000/
 ```
 
-Pour démarrer en environnement de production...
+Pour démarrer en mode dev...
 
 ```sh
-cd backend
+npm i
 npm run dev 
 ```
 
@@ -45,7 +45,7 @@ npm run dev
 
 Piiquante nécéssite [Angular CLI](https://guide-angular.wishtack.io/tools/angular-cli) pour fonctionner.
 
-Démarrer le serveur depuis le dossier frontend .
+Démarrer frontend :
 
 ```sh
 cd frontend
@@ -56,6 +56,4 @@ npm start
 ## Connexion a la page web 
 Aprés avoir démarré le front et le back
 ```
-Utiliser liveserver dans vs.code
-Ou
-Copier directement l'url dans le navigateur : http://localhost:8081/
+Copier directement l'url dans le navigateur : (http://localhost:8081/)

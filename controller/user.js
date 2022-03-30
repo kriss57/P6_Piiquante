@@ -7,6 +7,12 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 //------Fonction Password => hashage, Salage---//
+/**
+ * Protection mot de passe hashage + salage
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
 exports.signup = (req, res, next) => {
    bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUND))
       .then(hash => {
@@ -23,6 +29,13 @@ exports.signup = (req, res, next) => {
 }
 
 //-------Fonction Login via Email --------------//
+/**
+ * fonction login email
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ * @returns Doit renvoyer le token en fonction de l id
+ */
 exports.login = (req, res, next) => {
    User.findOne({ email: req.body.email })  //Cherche utilisateur email = email de la requete
       .then(user => {

@@ -2,10 +2,17 @@
 //----Import des modules nécéssaires--------//
 
 const Sauce = require('../models/sauces')
-const fs = require('fs')
+const fs = require('fs');
+
 
 //----------------------------------------------------------------------//
 //-----Methode Get pour toute les sauces---------lecture sauce----------//
+/**
+ * Methode Crud read toute les sauces
+ * @param {object} req objet de requete 
+ * @param {object} res objet de reponse 
+ * @param {function}  next 
+ */
 exports.getAllSauce = (req, res, next) => {
   Sauce.find()
     .then(sauces => res.status(200).json(sauces))
@@ -14,6 +21,12 @@ exports.getAllSauce = (req, res, next) => {
 
 //----------------------------------------------------------------//
 //-----Methode Get pour une sauce---------lecture sauce----------//
+/**
+ * Methode Crud read sauce
+ * @param {object} req objet requete
+ * @param {object} res objet séponse
+ * @returns {res.json} objet sauce
+ */
 exports.getOneSauce = async (req, res) => {
   let sauceId = (req.params.id)
 
@@ -40,6 +53,12 @@ exports.getOneSauce = async (req, res) => {
 
 //----------------------------------------------//
 //-----Methode Post pour créer la sauce--------//
+/**
+ * Methode Crud Create sauce
+ * @param {object} req objet de requete 
+ * @param {object} res objet de reponse 
+ * @param {function}  next 
+ */
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce)
   delete req.body._id
@@ -54,6 +73,12 @@ exports.createSauce = (req, res, next) => {
 
 //-----------------------------------------------// 
 //---------------Methode update sauce-----------//
+/**
+ * Methode Crud Update sauce
+ * @param {object} req objet de requete 
+ * @param {object} res objet de reponse 
+ * @param {function}  next 
+ */
 exports.updateSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }).then((sauce) => {
     const filename = sauce.imageUrl.split("/images/")[1];
@@ -77,6 +102,12 @@ exports.updateSauce = (req, res, next) => {
 
 //----------------------------------------------//
 //-----Methode delete pour supprimer la sauce--------//
+/**
+ * Methode Crud Delete sauce
+ * @param {object} req objet de requete 
+ * @param {object} res objet de reponse 
+ * @param {function}  next 
+ */
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
@@ -100,7 +131,7 @@ exports.deleteSauce = (req, res, next) => {
 //2- findOne renvoi objet de requete recupere id
 
 //------------------------------------------------------//
-//-------Methode ajouter ou en elever un like---------//
+//-------Methode ajouter ou en elever un like---------//  
 exports.thumbSauce = (req, res, next) => {
   if (req.body.like === 1) {
     console.log('requet front like a 1')
@@ -133,35 +164,5 @@ exports.thumbSauce = (req, res, next) => {
     })
     .catch(error => res.status(400).json({ error }))
 
-
-  /*  Sauce.findOne({ _id: req.param.id })               //recherche id
-      .then((sauce) => {
-        if (!sauce.usersLiked.includes(req.body.userId) && req.body.like === 1) {
-          console.log('userId n est pas dans la Bdd et requet front like a 1')
-          //Mise a jour Bdd---------//
-          Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
-            .then(() => res.status(201).json({ message: 'Sauce like +1 !' }))
-            .catch((error) => res.status(400).json({ error }))
-        }
-        //like = 0 (likes = 0 , pas de vote)
-        if (sauce.usersLiked.includes(req.body.userId) && req.body.like === 0) {
-          console.log('userId est  dans la Bdd et requet front like a 0')
-          //Mise a jour Bdd---------//
-          Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
-            .then(() => res.status(201).json({ message: 'Sauce like 0 !' }))
-            .catch((error) => res.status(400).json({ error }))
-        }
-        //like = -1 (dislikes =+1)
-        if (!sauce.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
-          console.log('userId est  dans usersDisliked et disLikes = 1')
-          //Mise a jour Bdd---------//
-          Sauce.updateOne({ _id: req.params.id }, { $inc: { dislikes: +1 }, $push: { usersDisliked: req.body.userId } })
-            .then(() => res.status(201).json({ message: 'Sauce usersDisliked +1 !' }))
-            .catch((error) => res.status(400).json({ error }))
-        }
-      })
-      .catch((error) => res.status(404).json({ error }))
-  }*/
-
-
 }
+
