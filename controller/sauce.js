@@ -8,7 +8,7 @@ const fs = require('fs');
 //----------------------------------------------------------------------//
 //-----Methode Get pour toute les sauces---------lecture sauce----------//
 /**
- * Methode Crud read toute les sauces
+ * Methode Crud read all
  * @param {object} req objet de requete 
  * @param {object} res objet de reponse 
  * @param {function}  next 
@@ -20,12 +20,12 @@ exports.getAllSauce = (req, res, next) => {
 }
 
 //----------------------------------------------------------------//
-//-----Methode Get pour une sauce---------lecture sauce----------//
+//-----Methode Get pour une sauce---------v2----------//
 /**
- * Methode Crud read sauce
+ * Methode Crud read 
  * @param {object} req objet requete
  * @param {object} res objet séponse
- * @returns {res.json} objet sauce
+ * @returns {res.json} la sauce trouvé
  */
 exports.getOneSauce = async (req, res) => {
   let sauceId = (req.params.id)
@@ -54,7 +54,7 @@ exports.getOneSauce = async (req, res) => {
 //----------------------------------------------//
 //-----Methode Post pour créer la sauce--------//
 /**
- * Methode Crud Create sauce
+ * Methode Crud Create 
  * @param {object} req objet de requete 
  * @param {object} res objet de reponse 
  * @param {function}  next 
@@ -74,7 +74,7 @@ exports.createSauce = (req, res, next) => {
 //-----------------------------------------------// 
 //---------------Methode update sauce-----------//
 /**
- * Methode Crud Update sauce
+ * Methode Crud Update 
  * @param {object} req objet de requete 
  * @param {object} res objet de reponse 
  * @param {function}  next 
@@ -103,7 +103,7 @@ exports.updateSauce = (req, res, next) => {
 //----------------------------------------------//
 //-----Methode delete pour supprimer la sauce--------//
 /**
- * Methode Crud Delete sauce
+ * Methode Crud Delete 
  * @param {object} req objet de requete 
  * @param {object} res objet de reponse 
  * @param {function}  next 
@@ -131,7 +131,13 @@ exports.deleteSauce = (req, res, next) => {
 //2- findOne renvoi objet de requete recupere id
 
 //------------------------------------------------------//
-//-------Methode ajouter ou en elever un like---------//  
+//-------Methode ajouter ou en elever un like---------// 
+/**
+ * 
+ * @param {object} req objet de requete 
+ * @param {object} res objet de reponse 
+ * @param {function}  next 
+ */
 exports.thumbSauce = (req, res, next) => {
   if (req.body.like === 1) {
     Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })

@@ -4,7 +4,7 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const path = require('path')
-//const helmet = require('helmet')          //Conflit avec CORS  notSameOrigin
+
 
 //-------------------------------------------//
 //---------Initialisation de l'API----------//
@@ -12,8 +12,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-//app.use(helmet())
-app.use(express.urlencoded({ extended: true }))   // A VOIR
+app.use(express.urlencoded({ extended: true }))
 
 //-----------------------------------------//
 //-------Import des modules de routage----//
@@ -28,7 +27,7 @@ app.get('/', (req, res) => res.send(`Je suis la !`))
 app.use('/api/auth', user_router) //connecter au routeur 
 app.use('/api/sauces', sauce_router)
 
-//-----middleware pour requete au dossier 'images'---//
+//-----middleware pour la requete au dossier 'images'---//
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 

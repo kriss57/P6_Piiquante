@@ -34,7 +34,7 @@ exports.signup = (req, res, next) => {
  * @param {object} req 
  * @param {object} res 
  * @param {function} next 
- * @returns Doit renvoyer le token en fonction de l id
+ * @returns Doit renvoyer le token et l id
  */
 exports.login = (req, res, next) => {
    User.findOne({ email: req.body.email })  //Cherche utilisateur email = email de la requete

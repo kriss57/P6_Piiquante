@@ -1,6 +1,10 @@
+//-------------------------------------------//
+//--------------Model Sauce-----------------//
+
+//------Import des modules nécéssaires------//
 const mongoose = require('mongoose');
 
-
+//--------------Schema sauce---------------//
 const SauceModel = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },

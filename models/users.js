@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator') // Pour appliquer au shema et appliquer unique a email
 
 //-----------------------------------------//
-//------
+//--------------Schema User---------------//
 const UserModel = mongoose.Schema({
     email: {
         type: String,
